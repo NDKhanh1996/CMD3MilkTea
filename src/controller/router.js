@@ -4,7 +4,8 @@ const router = {
     "home": productController.showHome,
     "add": productController.productAdd,
     "delete": productController.productDelete,
-    "edit": productController.producEdit
+    "edit": productController.producEdit,
+    "search": productController.productSearch
     
 }
 

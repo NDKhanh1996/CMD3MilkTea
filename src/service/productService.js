@@ -80,6 +80,7 @@ class ProductService {
                     reject(err);
                 } else {
                     resolve(searchHtml);
+                    return searchHtml
                 }
             })
         })
