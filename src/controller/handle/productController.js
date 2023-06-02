@@ -1,51 +1,45 @@
 const fs = require("fs");
 const qs = require("qs");
+const url = require("url");
 const productService = require("../../service/productService")
 const categoryService = require('../../service/categoryService')
 class ProductController {
     getHtmlProducts = (products, getHtml) => {
         let productHtml = "";
         products.map(item => {
+            const editButtonId = `editButton_${item.productId}`;
+            const deleteButtonId = `deleteButton_${item.productId}`;
             productHtml += `
                 <div class="video anim" style="--delay: .4s">
-                    <button id="button1" style="border: none" >
-                        <div class="video-time" type="button" >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16" onclick="myButton(${item.productId})">
+                    <div class="video-time" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16" onclick="myButton(${item.productId}, ${item.productName})">
                             <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                            </svg>
-                        </div>
-                    </button>
+                        </svg>
+                    </div>
                     <div class="video-wrapper">
-                    <img style="width:210px; height:210px" src="${item.image}">
+                        <img style="width:274px; height:250px" src="${item.image}">
                     </div>
                     <div>
                         <div class="video-name">${item.productName}</div>
                         <div class="video-view">${item.price}</div>
                     </div>
-                    <div style="display: flex; justify-content: center; padding-bottom: 10px; column-gap: 10px;" id="button">
-                        <a type="button" class="btn btn-outline-info" href="/edit/${item.productId}" id="editButton" style="display: none;">Edit</a>
-                        <a type="button" class="btn btn-outline-warning" href="/delete/${item.productId}" id="deleteButton" style="display: none;">Delete</a>
+                    <div style="display: flex; justify-content: center; padding-bottom: 10px; column-gap: 10px;">
+                        <a type="button" class="btn btn-outline-info" href="/edit/${item.productId}" id="${item.productId}" style="display: none;">Edit</a>
+                        <a type="button" class="btn btn-outline-warning" href="/delete/${item.productId}" id="${item.productName}" style="display: none;">Delete</a>
                     </div>
                 </div>
 
                 <script>
-                    let isDeleteAndEdit = false;
-                        function myButton() {
-                            let editButton = document.getElementById("editButton");
-                            let deleteButton = document.getElementById("deleteButton");
-                            isDeleteAndEdit = !isDeleteAndEdit
-                            if (isDeleteAndEdit) {
-                                editButton.style.display = "inline-block"
-                                deleteButton.style.display = "inline-block"
-                            } else {
-                                editButton.style.display = "none"
-                                deleteButton.style.display = "none"
-
-                            }  
-                        }
+                    function myButton(productId, price) {
+                        let editButton = document.getElementById(productId);
+                        let deleteButton = document.getElementById(price);
+                        editButton.style.display = editButton.style.display === "none" ? "inline-block" : "none";
+                        deleteButton.style.display = deleteButton.style.display === "none" ? "inline-block" : "none";
+                    }
                 </script>
             `
-        })
+        });
+
         getHtml = getHtml.replace("{productList}", productHtml);
         return getHtml;
     }
@@ -124,8 +118,24 @@ class ProductController {
         }
     }
 
-
-   
+    productSearch = async (req, res) => {
+        if (req.method === "POST") {
+            let data = "";
+            req.on("data", chunk => {
+                data += chunk;
+            })
+            req.on("end" , async () => {
+                let products = qs.parse(data)
+                await productService.findByName(products.searchInput);
+                fs.readFile("./src/view/index.html", "utf-8", async (err, indexHtml) => {
+                    let product = await productService.findByName(products.searchInput)
+                    indexHtml = this.getHtmlProducts(product, indexHtml)
+                    res.write(indexHtml)
+                    res.end()
+                })
+            })
+        }
+    }
 }
 
 

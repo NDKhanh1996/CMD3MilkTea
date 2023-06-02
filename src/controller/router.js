@@ -9,6 +9,8 @@ const router = {
     "edit": productController.producEdit,
     "signin": registerController.showFormSignIn,
     "login": loginController.showFormLogin,
+    "search": productController.productSearch
+
 }
 
 module.exports = router;
