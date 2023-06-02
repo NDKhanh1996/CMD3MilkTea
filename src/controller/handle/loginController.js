@@ -4,7 +4,7 @@ const loginService = require('../../service/loginService');
 
 class LoginController {
 
-    showFormLogin= async (req, res) => {
+    showFormLogin = async (req, res) => {
         if (req.method === "GET") {
             fs.readFile('./src/view/login_logout/login.html', "utf-8", (err, addHtml) => {
                 if (err) throw err.message;
@@ -21,7 +21,7 @@ class LoginController {
                 if (await loginService.login(userInfo.username, userInfo.password)) {
                     res.writeHead(301, {"location": "/home"})
                 } else {
-                    fs.readFile('./src/view/login_logout/login.html', "utf-8", (err, data)=> {
+                    fs.readFile('./src/view/login_logout/login.html', "utf-8", (err, data) => {
                         if (err) throw err.message;
                         data = data.replace('id="retry">', 'id="retry">' + "Email or password is not right");
                         res.write(data);

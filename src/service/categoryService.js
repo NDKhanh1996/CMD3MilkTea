@@ -2,6 +2,7 @@ const connection = require("../entity/connection");
 
 class CategoryService {
     connect;
+
     constructor() {
         connection.connectToMySql()
         this.connect = connection.getConnection();
