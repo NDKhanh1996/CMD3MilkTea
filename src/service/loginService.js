@@ -1,5 +1,4 @@
 const connection = require("../entity/connection");
-const loginController = require('../controller/handle/loginController');
 
 class LoginService {
     connect = connection.getConnection();

@@ -1,11 +1,8 @@
 const fs = require('fs');
 const qs = require('qs');
-const registerService = require('../../service/registerService');
 const loginService = require('../../service/loginService');
-const connection = require('../../entity/connection');
 
 class LoginController {
-    connect = connection.getConnection();
 
     showFormLogin= async (req, res) => {
         if (req.method === "GET") {
