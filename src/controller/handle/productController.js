@@ -52,7 +52,7 @@ class ProductController {
 
     showHome = async (req, res) => {
         if (req.method === 'GET') {
-            fs.readFile('./view/index.html', 'utf-8', async (err, indexHtml) => {
+            fs.readFile('./src/view/index.html', 'utf-8', async (err, indexHtml) => {
                 let products = await productService.findAll();
                 indexHtml = this.getHtmlProducts(products, indexHtml);
                 res.write(indexHtml);
@@ -64,7 +64,7 @@ class ProductController {
     productAdd = async (req, res) => {
         if (req.method === "GET") {
             let category = await categoryService.findAll()
-            fs.readFile("./view/product/add.html", "utf-8", (err, addHtml) => {
+            fs.readFile("./src/view/product/add.html", "utf-8", (err, addHtml) => {
              let categoryHtml = ""
              category.map(item => {
                 categoryHtml += `<option value="${item.categoryId}">${item.categoryName}</option>`
@@ -95,7 +95,7 @@ class ProductController {
 
     producEdit = (req, res,idEdit) => {
         if (req.method === "GET") {
-            fs.readFile("./view/product/edit.html", "utf-8", async (err, editHtml) => {
+            fs.readFile("./src/view/product/edit.html", "utf-8", async (err, editHtml) => {
                 let products = await productService.findById(idEdit);
                 let categories = await categoryService.findAll();
                 editHtml = editHtml.replace("{productName}", products.productName);
@@ -124,9 +124,6 @@ class ProductController {
         }
     }
 
-    productSearch = (req, res, nameSearch) => {
-       
-    }
 
    
 }

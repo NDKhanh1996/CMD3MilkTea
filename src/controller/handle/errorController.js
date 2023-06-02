@@ -1,7 +1,7 @@
 const fs = require("fs")
 class ErrorController {
     showNotFound = (req, res) => {
-        fs.readFile("./view/error/notFound.html", "utf-8", (err, notFoundHtml) => {
+        fs.readFile("./src/view/error/notFound.html", "utf-8", (err, notFoundHtml) => {
             res.write(notFoundHtml)
             res.end();
         })
