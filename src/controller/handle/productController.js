@@ -1,5 +1,6 @@
 const fs = require("fs");
 const qs = require("qs");
+const url = require("url");
 const productService = require("../../service/productService")
 const categoryService = require('../../service/categoryService')
 class ProductController {
@@ -16,7 +17,7 @@ class ProductController {
                         </svg>
                     </div>
                     <div class="video-wrapper">
-                        <img style="width:210px; height:210px" src="${item.image}">
+                        <img style="width:274px; height:250px" src="${item.image}">
                     </div>
                     <div>
                         <div class="video-name">${item.productName}</div>
@@ -29,16 +30,14 @@ class ProductController {
                 </div>
 
                 <script>
-    function myButton(productId, price) {
-        let editButton = document.getElementById(productId);
-        let deleteButton = document.getElementById(price);
-        editButton.style.display = editButton.style.display === "none" ? "inline-block" : "none";
-        deleteButton.style.display = deleteButton.style.display === "none" ? "inline-block" : "none";
-    }
-</script>
-
-            `;
-            
+                    function myButton(productId, price) {
+                        let editButton = document.getElementById(productId);
+                        let deleteButton = document.getElementById(price);
+                        editButton.style.display = editButton.style.display === "none" ? "inline-block" : "none";
+                        deleteButton.style.display = deleteButton.style.display === "none" ? "inline-block" : "none";
+                    }
+                </script>
+            `
         });
         
         getHtml = getHtml.replace("{productList}", productHtml);
@@ -119,11 +118,24 @@ class ProductController {
         }
     }
 
-    productSearch = (req, res, nameSearch) => {
-       
+    productSearch = async (req, res) => {
+        if (req.method === "POST") {
+            let data = "";
+            req.on("data", chunk => {
+                data += chunk;
+            })
+            req.on("end" , async () => {
+                let products = qs.parse(data)
+                await productService.findByName(products.searchInput);
+                fs.readFile("./src/view/index.html", "utf-8", async (err, indexHtml) => {
+                    let product = await productService.findByName(products.searchInput)
+                    indexHtml = this.getHtmlProducts(product, indexHtml)                  
+                    res.write(indexHtml)
+                    res.end()
+                })
+            })
+        }
     }
-
-   
 }
 
 
