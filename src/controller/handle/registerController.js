@@ -20,8 +20,8 @@ class RegisterController {
                 data += chunk;
             })
             req.on("end", () => {
-                let product = qs.parse(data);
-                registerService.registerAddToDb(product.username, product.password)
+                let userInfo = qs.parse(data);
+                registerService.registerAddToDb(userInfo.username, userInfo.password)
                 res.writeHead(301, {"location": "/login"});
                 res.end();
             })

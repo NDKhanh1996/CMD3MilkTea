@@ -1,7 +1,8 @@
 const fs = require('fs');
 const qs = require('qs');
-const RegisterService = require('../../service/registerService')
-const connection = require('../../entity/connection')
+const registerService = require('../../service/registerService');
+const loginService = require('../../service/loginService');
+const connection = require('../../entity/connection');
 
 class LoginController {
     connect = connection.getConnection();
@@ -18,10 +19,9 @@ class LoginController {
             req.on("data", (chunk) => {
                 data += chunk;
             })
-            req.on("end", () => {
-                let product = qs.parse(data);
-                console.log(product)
-                res.writeHead(301, {"location": "/home"});
+            req.on("end", async () => {
+                let userInfo = qs.parse(data);
+                await loginService.login(userInfo.username, userInfo.password) ? res.writeHead(301, {"location": "/home"}) : res.writeHead(301, {"location": "/signin"});
                 res.end();
             })
         }
