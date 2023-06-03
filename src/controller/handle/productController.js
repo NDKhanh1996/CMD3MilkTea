@@ -21,7 +21,7 @@ class ProductController {
                     </div>
                     <div>
                         <div class="video-name">${item.productName}</div>
-                        <div class="video-view">${item.price}</div>
+                        <div class="video-view">$${item.price}</div>
                     </div>
                     <div style="display: flex; justify-content: center; padding-bottom: 10px; column-gap: 10px;">
                         <a type="button" class="btn btn-outline-info" href="/edit/${item.productId}" id="${item.productId}" style="display: none;">Edit</a>
