@@ -1,6 +1,7 @@
 const productController = require("./handle/productController");
 const registerController = require('./handle/registerController');
-const loginController = require('./handle/loginController')
+const loginController = require('./handle/loginController');
+const pendingController = require('./handle/pendingController');
 
 const router = {
     "home": productController.showHome,
@@ -9,7 +10,8 @@ const router = {
     "edit": productController.producEdit,
     "signin": registerController.showFormSignIn,
     "login": loginController.showFormLogin,
-    "search": productController.productSearch
+    "search": productController.productSearch,
+    "pending": pendingController.showPendingList,
 
 }
 
