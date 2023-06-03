@@ -19,11 +19,12 @@ class LoginController {
             req.on("end", async () => {
                 let userInfo = qs.parse(data);
                 if (await loginService.login(userInfo.username, userInfo.password)) {
-                    res.writeHead(301, {"location": "/home"})
+                    res.writeHead(301, {"location": "/home"});
+                    res.end();
                 } else {
                     fs.readFile('./src/view/login_logout/login.html', "utf-8", (err, data) => {
                         if (err) throw err.message;
-                        data = data.replace('id="retry">', 'id="retry">' + "Email or password is not right");
+                        data = data.replace('id="retry">', 'id="retry">' + "information is not right or this account is not activated");
                         res.write(data);
                         res.end();
                     })

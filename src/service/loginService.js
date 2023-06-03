@@ -16,7 +16,7 @@ class LoginService {
             });
             let loginComplete = false;
             for (let userListElement of userList) {
-                if (userListElement.email === email && userListElement.password === password) {
+                if (userListElement.email === email && userListElement.password === password && userListElement.active === 1) {
                     loginComplete = true;
                     break;
                 }
