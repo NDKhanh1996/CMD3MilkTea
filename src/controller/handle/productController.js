@@ -49,7 +49,6 @@ class ProductController {
             fs.readFile('./src/view/index.html', 'utf-8', async (err, indexHtml) => {
                 let products = await productService.findAll();
                 let category = await categoryService.findAll();
-                let categoryName = category.categoryName
                 indexHtml = this.getHtmlProducts(products, indexHtml);
                 category.forEach(categoryElement => {indexHtml = indexHtml.replace('<p id="category"></p>', `<a class="sidebar-link" href="#">
             <svg viewBox="0 0 24 24" fill="currentColor">
