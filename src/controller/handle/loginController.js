@@ -27,7 +27,7 @@ class LoginController {
                         if (err) throw err.message;
                         data = data.replace('id="retry">', 'id="retry">' + "information is not right or this account is not activated");
                         res.write(data);
-                        res.setHeader('Cache-Control','no-cache, no-store, must-revalidate')
+                        // res.setHeader('Cache-Control','no-cache, no-store, must-revalidate')
                         res.end();
                     })
                 }

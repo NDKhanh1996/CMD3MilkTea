@@ -16,6 +16,14 @@ const router = {
     "pending": pendingController.showPendingList,
     "addCategory": categoryController.addCategory,
     "logout": logoutController.logout,
+    "ascending": productController.ascending,
+    "descending": productController.descending,
+    "searchByType": productController.searchByTypes
+
+
+
+
+
 }
 
 module.exports = router;

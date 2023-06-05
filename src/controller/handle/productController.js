@@ -22,7 +22,7 @@ class ProductController {
                     </div>
                     <div>
                         <div class="video-name">${item.productName}</div>
-                        <div class="video-view">$${item.price}</div>
+                        <div class="video-view">$${item.price}</div>                        
                     </div>
                     <div style="display: flex; justify-content: center; padding-bottom: 10px; column-gap: 10px;">
                         <a type="button" class="btn btn-outline-info" href="/edit/${item.productId}" id="${item.productId}" style="display: none;">Edit</a>
@@ -143,6 +143,40 @@ class ProductController {
                     res.write(indexHtml)
                     res.end()
                 })
+            })
+        }
+    }
+
+    ascending = (req, res) => {
+        if (req.method === 'GET') {
+            fs.readFile('./src/view/index.html', 'utf-8', async (err, indexHtml) => {
+                let products = await productService.ascending();
+                indexHtml = this.getHtmlProducts(products, indexHtml)
+                res.write(indexHtml);
+                res.end();
+            })
+        }
+    }
+
+    descending = (req, res) => {
+        if (req.method === 'GET') {
+            fs.readFile('./src/view/index.html', 'utf-8', async (err, indexHtml) => {
+                let products = await productService.descending();
+                indexHtml = this.getHtmlProducts(products, indexHtml)
+                res.write(indexHtml);
+                res.end();
+            })
+        }
+    }
+
+    searchByTypes = (req, res, id) => {
+        console.log("da vao controller")
+        if (req.method === 'GET') {
+            fs.readFile('./src/view/index.html', 'utf-8', async (err, indexHtml) => {
+                let products = await productService.searchByType(id);
+                indexHtml = this.getHtmlProducts(products, indexHtml)
+                res.write(indexHtml);
+                res.end();
             })
         }
     }

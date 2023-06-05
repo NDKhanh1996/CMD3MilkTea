@@ -84,6 +84,43 @@ class ProductService {
             })
         })
     }
+
+    ascending = () => {
+        return new Promise((resolve, reject) => {
+            this.connect.query(`SELECT * FROM products ORDER BY price ASC`, (err, sortHtml) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(sortHtml)
+                }
+            })
+        })
+    }
+
+    descending = () => {
+        return new Promise((resolve, reject) => {
+            this.connect.query(`SELECT * FROM products ORDER BY price DESC`, (err, sortHtml) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(sortHtml)
+                }
+            })
+        })
+    }
+
+    searchByType = (id) => {
+        console.log('da vao service')
+        return new Promise((resolve, reject) => {
+            this.connect.query(`SELECT * FROM products p JOIN categories c ON p.categoryId = c.categoryId WHERE c.categoryId = ${id}`, (err, searchHtml) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(searchHtml)
+                }
+            })
+        })
+    }
 }
 
 
