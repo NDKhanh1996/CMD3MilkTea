@@ -4,8 +4,8 @@ class LoginService {
     connect = connection.getConnection();
 
     async login(email, password) {
-        try{
-            let userList = await new Promise( (resolve, reject) => {
+        try {
+            let userList = await new Promise((resolve, reject) => {
                 this.connect.query(`SELECT * FROM case_md3.users; `, (err, result) => {
                     if (err) {
                         reject(err);
@@ -16,13 +16,13 @@ class LoginService {
             });
             let loginComplete = false;
             for (let userListElement of userList) {
-                if (userListElement.email === email && userListElement.password === password){
+                if (userListElement.email === email && userListElement.password === password && userListElement.active === 1) {
                     loginComplete = true;
                     break;
                 }
             }
             return loginComplete
-        } catch (err){
+        } catch (err) {
             console.log(err.message)
         }
     }

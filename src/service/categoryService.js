@@ -2,6 +2,7 @@ const connection = require("../entity/connection");
 
 class CategoryService {
     connect;
+
     constructor() {
         connection.connectToMySql()
         this.connect = connection.getConnection();
@@ -17,6 +18,10 @@ class CategoryService {
                 }
             })
         })
+    }
+
+    addCategory(categoryWantToAdd){
+        this.connect.query(`insert into categories (categoryName) values ('${categoryWantToAdd}');`)
     }
 }
 
