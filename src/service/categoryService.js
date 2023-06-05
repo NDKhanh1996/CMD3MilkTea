@@ -19,6 +19,10 @@ class CategoryService {
             })
         })
     }
+
+    addCategory(categoryWantToAdd){
+        this.connect.query(`insert into categories (categoryName) values ('${categoryWantToAdd}');`)
+    }
 }
 
 module.exports = new CategoryService();
