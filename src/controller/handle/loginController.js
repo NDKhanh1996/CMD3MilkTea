@@ -19,6 +19,7 @@ class LoginController {
             req.on("end", async () => {
                 let userInfo = qs.parse(data);
                 if (await loginService.login(userInfo.username, userInfo.password)) {
+                    this.createSession()
                     res.writeHead(301, {"location": "/home"});
                     res.end();
                 } else {
@@ -31,6 +32,12 @@ class LoginController {
                 }
             })
         }
+    }
+
+    createSession() {
+        fs.writeFile('./src/session/session.txt',`${loginService.loginInfoName}`, (err)=>{
+            if (err) throw err.message;
+        })
     }
 }
 

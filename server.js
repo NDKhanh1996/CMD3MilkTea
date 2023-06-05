@@ -2,7 +2,7 @@ const { appendFile } = require("fs");
 const router = require("./src/controller/router")
 const http = require("http");
 const handleController = require("./src/controller/handle/errorController");
-// const a = require('./src/view/Pending/pending.html')
+// const a = require('./src/session/session.txt')
 const server = http.createServer((req, res) => {
     let url = req.url;
     let arrPath = url.split("/");

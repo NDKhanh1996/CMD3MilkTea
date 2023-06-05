@@ -1,7 +1,9 @@
 const connection = require("../entity/connection");
+const fs = require('fs')
 
 class LoginService {
     connect = connection.getConnection();
+    loginInfoName = '';
 
     async login(email, password) {
         try {
@@ -18,6 +20,7 @@ class LoginService {
             for (let userListElement of userList) {
                 if (userListElement.email === email && userListElement.password === password && userListElement.active === 1) {
                     loginComplete = true;
+                    this.loginInfoName = userListElement.email
                     break;
                 }
             }
@@ -25,6 +28,18 @@ class LoginService {
         } catch (err) {
             console.log(err.message)
         }
+    }
+
+    getLoginInfo() {
+        return new Promise((resolve, reject) => {
+            fs.readFile('./src/session/session.txt', "utf-8", (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            })
+        })
     }
 }
 
