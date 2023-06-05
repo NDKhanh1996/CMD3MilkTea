@@ -1,6 +1,20 @@
 {
+  "name": "case_md3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "mysql": "^2.18.1",
     "qs": "^6.11.2"
+=======
+    "nodemon": "^2.0.22",
+    "url": "^0.11.0"
+>>>>>>> parent of db20b45... update pending sort
   }
 }

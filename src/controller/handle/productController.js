@@ -39,7 +39,7 @@ class ProductController {
                 </script>
             `
         });
-
+        
         getHtml = getHtml.replace("{productList}", productHtml);
         return getHtml;
     }
@@ -129,7 +129,7 @@ class ProductController {
                 await productService.findByName(products.searchInput);
                 fs.readFile("./src/view/index.html", "utf-8", async (err, indexHtml) => {
                     let product = await productService.findByName(products.searchInput)
-                    indexHtml = this.getHtmlProducts(product, indexHtml)
+                    indexHtml = this.getHtmlProducts(product, indexHtml)                  
                     res.write(indexHtml)
                     res.end()
                 })
