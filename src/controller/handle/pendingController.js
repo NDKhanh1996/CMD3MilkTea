@@ -14,7 +14,6 @@ class PendingController {
         <tr>
           <td>${i.userId}</td>
           <td>${i.email}</td>
-          <td>${i.password}</td>
           <td>${i.active}</td>
           <td><form method="post"><input type="hidden" name="userId" value="${i.userId}"><button type="submit">change status</button></form></td>
         </tr>
