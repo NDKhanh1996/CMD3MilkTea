@@ -9,13 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "mysql": "^2.18.1",
     "nodemon": "^2.0.22",
-    "qs": "^6.11.2"
-=======
-    "nodemon": "^2.0.22",
+    "qs": "^6.11.2",
     "url": "^0.11.0"
->>>>>>> parent of db20b45... update pending sort
   }
 }

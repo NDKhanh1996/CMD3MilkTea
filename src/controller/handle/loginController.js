@@ -19,6 +19,7 @@ class LoginController {
             req.on("end", async () => {
                 let userInfo = qs.parse(data);
                 if (await loginService.login(userInfo.username, userInfo.password)) {
+                    this.createSession()
                     res.writeHead(301, {"location": "/home"});
                     res.end();
                 } else {
@@ -26,11 +27,18 @@ class LoginController {
                         if (err) throw err.message;
                         data = data.replace('id="retry">', 'id="retry">' + "information is not right or this account is not activated");
                         res.write(data);
+                        // res.setHeader('Cache-Control','no-cache, no-store, must-revalidate')
                         res.end();
                     })
                 }
             })
         }
+    }
+
+    createSession() {
+        fs.writeFile('./src/session/session.txt',`${loginService.loginInfoName}`, (err)=>{
+            if (err) throw err.message;
+        })
     }
 }
 
